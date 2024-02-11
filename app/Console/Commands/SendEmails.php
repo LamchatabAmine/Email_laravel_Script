@@ -39,6 +39,15 @@ class SendEmails extends Command
         $batchIndex = 0;
 
 
+        // this is for statistics
+
+        $successCount = 0;
+        $failureCount = 0;
+        $totalDeliveryTime = 0;
+
+        // this is for statistics
+
+
 
         foreach ($emailAddresses as $email) {
 
@@ -59,7 +68,6 @@ class SendEmails extends Command
             // Set the mail configuration dynamically
             Config::set('mail.mailers.smtp', $config);
 
-            // TODO: send with message which smtp send this message
             $text = <<<EOT
             Hello,
 
@@ -76,9 +84,16 @@ class SendEmails extends Command
 
             $text .= "\n\n: $randomTag";
 
-            Mail::raw($text, function ($message) use ($email, $smtp) {
-                $message->from($smtp['from'])->to($email)->subject('Test Email');
-            });
+
+            try {
+                Mail::raw($text, function ($message) use ($email, $smtp) {
+                    $message->from($smtp['from'])->to($email)->subject('Test Email');
+                });
+                $successCount++;
+            } catch (\Exception $e) {
+                Log::error('Failed to send email: ' . $e->getMessage());
+                $failureCount++;
+            }
 
 
             $batchIndex++;
@@ -88,6 +103,16 @@ class SendEmails extends Command
                 sleep(300); // 5 minutes delay
             }
         }
+
+
+        // Calculate statistics
+        $totalCount = $successCount + $failureCount;
+        $successRate = $totalCount > 0 ? ($successCount / $totalCount) * 100 : 0;
+        $failureRate = $totalCount > 0 ? ($failureCount / $totalCount) * 100 : 0;
+
+        // Log statistics
+        Log::info('Success Rate: ' . $successRate . '%');
+        Log::info('Failure Rate: ' . $failureRate . '%');
 
     }
 }
