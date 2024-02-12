@@ -1,0 +1,37 @@
+[
+    {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "servicesnety@gmail.com",
+        "password": "jbmu lvip kpaw mvju",
+        "from": "servicesnety@gmail.com"
+    },
+    {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "nety.services.it@gmail.com",
+        "password": "hsms zmvs ghtq qttr",
+        "from": "nety.services.it@gmail.com"
+    },
+    {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "nety.services.digi@gmail.com",
+        "password": "cnkl smpb wevj nbcb",
+        "from": "nety.services.digi@gmail.com"
+    },
+    {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "nety.services.tech@gmail.com",
+        "password": "zjrs buyr dayg bkat",
+        "from": "nety.services.tech@gmail.com"
+    },
+    {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "services.nety.IT@gmail.com",
+        "password": "uddy gbly mosh nego",
+        "from": "services.nety.IT@gmail.com"
+    }
+]
