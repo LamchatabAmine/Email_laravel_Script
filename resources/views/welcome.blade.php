@@ -97,13 +97,18 @@
             <div class="card-title">Total SMTP Servers</div>
             <div class="card-content">{{ $smtpCount }}</div>
         </div>
-        <button id="addSmtpBtn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#exampleModal">Add SMTP Server</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#SMTPServer">
+            Add SMTP Server
+        </button>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EmailAddress">
+            Add Email address
+        </button>
     </div>
 
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="SMTPServer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -111,83 +116,124 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="smtpForm">
                         <div class="mb-3">
-                            <label for="host" class="form-label">host</label>
+                            <label for="host" class="form-label">Host</label>
                             <input type="text" class="form-control" id="host" required>
                         </div>
                         <div class="mb-3">
-                            <label for="port" class="form-label">port</label>
+                            <label for="port" class="form-label">Port</label>
                             <input type="text" class="form-control" id="port" required>
                         </div>
                         <div class="mb-3">
-                            <label for="username" class="form-label">username</label>
+                            <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">password</label>
-                            <input type="text" class="form-control" id="password" required>
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="from" class="form-label">from</label>
+                            <input type="text" class="form-control" id="from" required>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Add</button>
+                    <button type="button" class="btn btn-primary" id="addSmtpBtn">Add</button>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <!-- Modal for adding SMTP server -->
-    {{-- <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <form id="smtpForm">
-                <label for="host">Host:</label>
-                <input type="text" id="host" name="host" required><br><br>
-                <label for="port">Port:</label>
-                <input type="text" id="port" name="port" required><br><br>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required><br><br>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required><br><br>
-                <label for="from">From:</label>
-                <input type="text" id="from" name="from" required><br><br>
-                <input type="submit" value="Submit">
-            </form>
+    <!-- Modal -->
+    <div class="modal fade" id="EmailAddress" tabindex="-1" aria-labelledby="EmailAddress" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="EmailAddress">Import Email Addresses</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="emailAddressForm">
+                        <div class="mb-3">
+                            <label for="emailFile" class="form-label">Select File</label>
+                            <input type="file" class="form-control" id="emailFile" accept=".csv,.txt" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="importEmailAddresses">Import</button>
+                </div>
+            </div>
         </div>
-    </div> --}}
+    </div>
 
-    <!-- JavaScript to handle modal display -->
-    {{-- <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
+    <script>
+        document.getElementById('addSmtpBtn').addEventListener('click', function() {
+            // Get form data
+            const host = document.getElementById('host').value;
+            const port = document.getElementById('port').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const from = document.getElementById('from').value;
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("addSmtpBtn");
+            // Create SMTP data object
+            const data = {
+                host: host,
+                port: port,
+                username: username,
+                password: password,
+                from: from
+            };
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+            console.log(JSON.stringify(data));
 
-        // When the user clicks on the button, open the modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
+            // Send POST request to add SMTP
+            fetch('/add-smtp', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Add CSRF token for Laravel
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload(); // Refresh page after adding SMTP
+                })
+                .catch(error => console.error('Error:', error));
+        });
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
+        document.getElementById('importEmailAddresses').addEventListener('click', function() {
+            const fileInput = document.getElementById('emailFile');
+            const file = fileInput.files[0];
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                fetch('/import-email-addresses', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        $('#EmailAddress').modal('hide');
+                    })
+                    .catch(error => console.error('Error:', error));
+            } else {
+                alert('Please select a file.');
             }
-        }
-    </script> --}}
+        });
+    </script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>

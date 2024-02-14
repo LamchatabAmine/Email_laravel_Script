@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Config;
 use Carbon\Carbon;
 use App\Mail\MarketingMail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
 class EmailController extends Controller
@@ -101,7 +102,7 @@ class EmailController extends Controller
         $email = reset($emailAddresses);
 
         $text = <<<EOT
-            Hello,
+            Hello Adnan,
 
             This is a test email message sent using Laravel.
 
@@ -125,6 +126,29 @@ class EmailController extends Controller
         return 'Email sent successfully!';
     }
 
+
+    public function importEmailAddresses(Request $request)
+    {
+        // Validate the uploaded file
+        $validator = Validator::make($request->all(), [
+            'file' => 'required|file|mimes:json', // Ensure file is JSON and less than 2MB
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Invalid file format '], 400);
+        }
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            // Store the uploaded file with a specific name
+            $path = $file->storeAs('public', 'email_addressesXX.json');
+
+            return response()->json(['message' => 'File uploaded successfully', 'path' => $path]);
+        } else {
+            return response()->json(['message' => 'No file selected'], 400);
+        }
+    }
 
 
 }
