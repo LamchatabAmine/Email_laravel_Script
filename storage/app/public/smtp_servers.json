@@ -33,5 +33,89 @@
         "username": "services.nety.IT@gmail.com",
         "password": "uddy gbly mosh nego",
         "from": "services.nety.IT@gmail.com"
+    },
+    {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "it.services.nety@gmail.com",
+        "password": "dwhi pmym ieet hglt",
+        "from": "it.services.nety@gmail.com"
+    },
+    {
+        "host": "smtp.gmail.com",
+        "port": 587,
+        "username": "nety.digital.it@gmail.com",
+        "password": "txlt xvzj xyiq ftsy",
+        "from": "nety.digital.it@gmail.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "nety.digi@outlook.com",
+        "password": "AMINOS2000",
+        "from": "nety.digi@outlook.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "nety.digital.web@outlook.com",
+        "password": "AMINOS2000",
+        "from": "nety.digital.web@outlook.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "servicesnety@outlook.com",
+        "password": "AMINOS2000",
+        "from": "servicesnety@outlook.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "nety.it.seo@outlook.com",
+        "password": "AMINOS2000",
+        "from": "nety.it.seo@outlook.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "nety.services.it@outlook.com",
+        "password": "AMINOS2000",
+        "from": "nety.services.it@outlook.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "nety.seo.web@hotmail.com",
+        "password": "AMINOS2000",
+        "from": "nety.seo.web@hotmail.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "it.services.nety@outlook.com",
+        "password": "AMINOS2000",
+        "from": "it.services.nety@outlook.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "nety.digital.it@outlook.com",
+        "password": "AMINOS2000",
+        "from": "nety.digital.it@outlook.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "nety.seo.web@outlook.com",
+        "password": "AMINOS2000",
+        "from": "nety.seo.web@outlook.com"
+    },
+    {
+        "host": "smtp.office365.com",
+        "port": 587,
+        "username": "nety.seo.expert@outlook.com",
+        "password": "AMINOS2000",
+        "from": "nety.seo.expert@outlook.com"
     }
 ]
