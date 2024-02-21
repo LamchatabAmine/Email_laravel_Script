@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-
-use Config;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 
 class SendEmails extends Command
 {
@@ -36,7 +36,10 @@ class SendEmails extends Command
 
         $batchSize = count($emailAddresses);
         $smtpCount = count($smtpServers);
-        $batchIndex = 0;
+
+        // Get the current batch index from batch_index.json
+        $batchIndexData = json_decode(Storage::get('public/batch_index.json'), true);
+        $batchIndex = $batchIndexData['batchIndex'] ?? 0;
 
 
         // this is for statistics
@@ -74,6 +77,7 @@ class SendEmails extends Command
             This is a test email message sent using Scheduler.
 
             SMTP Index: $smtpIndex
+            batchIndex : $batchIndex
 
             Regards,
             Nety
@@ -96,7 +100,13 @@ class SendEmails extends Command
             }
 
 
+
+            // Increment batch index
             $batchIndex++;
+
+            // Update batch index in batch_index.json
+            Storage::put('public/batch_index.json', json_encode(['batchIndex' => $batchIndex]));
+
 
             if ($batchIndex % $batchSize === 0) {
                 Log::info('Waiting for 5 minutes before sending the next batch of emails.');
@@ -115,4 +125,6 @@ class SendEmails extends Command
         Log::info('Failure Rate: ' . $failureRate . '%');
 
     }
+
+
 }
