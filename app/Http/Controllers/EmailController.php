@@ -14,118 +14,6 @@ use Illuminate\Support\Facades\Storage;
 
 class EmailController extends Controller
 {
-    public function sendEmails()
-    {
-        $smtpServers = json_decode(Storage::get('public/smtp_servers.json'), true);
-        $emailAddresses = json_decode(Storage::get('public/email_addresses.json'), true);
-
-        $batchSize = count($emailAddresses);
-        $smtpCount = count($smtpServers);
-        $batchIndex = 0;
-
-
-
-        foreach ($emailAddresses as $email) {
-
-            $smtpIndex = $batchIndex % $smtpCount;
-
-            $smtp = $smtpServers[$smtpIndex];
-
-            $config = [
-                'transport' => 'smtp',
-                'host' => $smtp['host'],
-                'port' => $smtp['port'],
-                'from' => $smtp['from'],
-                'encryption' => 'tls',
-                'username' => $smtp['username'],
-                'password' => $smtp['password']
-            ];
-
-            // Set the mail configuration dynamically
-            Config::set('mail.mailers.smtp', $config);
-
-            // TODO: send with message which smtp send this message
-            $text = <<<EOT
-            Hello,
-
-            This is a test email message sent using Laravel.
-
-            Regards,
-            Nety
-            EOT;
-
-            // Generate a random tag
-            $randomTag = Str::random(12); // Adjust the length as needed
-
-            $text .= "\n\n: $randomTag";
-
-            Mail::raw($text, function ($message) use ($email, $smtp) {
-                $message->from($smtp['from'])->to($email)->subject('Test Email');
-            });
-
-
-            $batchIndex++;
-
-            if ($batchIndex % $batchSize === 0) {
-                Log::info('Waiting for 5 minutes before sending the next batch of emails.');
-                sleep(300); // 5 minutes delay
-            }
-        }
-
-        return 'Emails sent successfully!';
-    }
-
-
-
-    // public function test()
-    // {
-    //     $smtpServers = json_decode(Storage::get('public/smtp_servers.json'), true);
-    //     $emailAddresses = json_decode(Storage::get('public/email_addresses.json'), true);
-
-    //     // Get the first SMTP server from the configuration
-    //     $smtp = reset($smtpServers);
-
-    //     $config = [
-    //         'transport' => 'smtp',
-    //         'host' => $smtp['host'],
-    //         'port' => $smtp['port'],
-    //         'from' => $smtp['from'],
-    //         'encryption' => 'tls',
-    //         'username' => $smtp['username'],
-    //         'password' => $smtp['password']
-    //     ];
-
-    //     // Set the mail configuration dynamically
-    //     Config::set('mail.mailers.smtp', $config);
-
-    //     // Send email using the configured SMTP server to the first email address
-    //     $email = reset($emailAddresses);
-
-    //     $text = <<<EOT
-    //         Hello Adnan,
-
-    //         This is a test email message sent using Laravel.
-
-    //         Regards,
-    //         Nety
-    //         EOT;
-
-    //     // Generate a random tag
-    //     $randomTag = Str::random(12); // Adjust the length as needed
-
-    //     $text .= "\n\n: $randomTag";
-
-    //     Mail::raw($text, function ($message) use ($email, $smtp) {
-    //         $message->from($smtp['from'])->to($email)->subject('Test Email');
-    //     });
-
-
-    //     // Send the email using the Markdown template
-    //     // Mail::to($email)->send(new MarketingMail());
-
-    //     return 'Email sent successfully!';
-    // }
-
 
     public function test()
     {
@@ -187,10 +75,10 @@ class EmailController extends Controller
 
     🚀 It's Time to Win the Competition with Professional Video! Stand out in the crowd and surpass your competition with our professional video service. GeoPath Navigator allows you to share your visually stunning video across platforms and captivate clients like never before.
 
-    🎉 New Year 2024 Exclusive: Act Fast to Secure Your Discount! To celebrate the arrival of 2024, we're extending this exclusive offer. 
+    🎉 New Year 2024 Exclusive: Act Fast to Secure Your Discount! To celebrate the arrival of 2024, we're extending this exclusive offer.
 
     Get GeoPath Navigator for only $40 (30fps) or elevate your experience with an immersive 60fps video for just $50! A remarkable 80% OFF! This limited-time deal ends on 03/03/2024.
-    
+
     🕛 Act Fast - Offer Ends Soon!
 
     This exclusive New Year offer is valid only until 03/03/2024. Don't miss your chance to transform {$BusinessName}'s business visibility and leave a lasting impression on its clients.

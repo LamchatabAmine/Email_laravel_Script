@@ -102,7 +102,7 @@
         </button>
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EmailAddress">
-            Add Email address
+            Add verified GOOGLEDATA
         </button>
     </div>
 
@@ -153,7 +153,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="EmailAddress">Import Email Addresses</h5>
+                    <h5 class="modal-title" id="EmailAddress">Import verified GOOGLEDATA</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
