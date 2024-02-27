@@ -13,8 +13,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        // $schedule->command('app:send-emails')->dailyAt('10:00')->timezone('America/California');
-        $schedule->command('app:send-emails')->everyMinute();
+        // $schedule->command('app:send-emails')->dailyAt('10:00')->timezone('America/California')->withoutOverlapping();;
+        $schedule->command('app:send-emails')->withoutOverlapping();
+        // $schedule->command('app:send-emails')->everyMinute();
     }
 
     /**

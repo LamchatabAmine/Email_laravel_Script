@@ -187,10 +187,10 @@ class EmailController extends Controller
 
     🚀 It's Time to Win the Competition with Professional Video! Stand out in the crowd and surpass your competition with our professional video service. GeoPath Navigator allows you to share your visually stunning video across platforms and captivate clients like never before.
 
-    🎉 New Year 2024 Exclusive: Act Fast to Secure Your Discount! To celebrate the arrival of 2024, we're extending this exclusive offer. 
+    🎉 New Year 2024 Exclusive: Act Fast to Secure Your Discount! To celebrate the arrival of 2024, we're extending this exclusive offer.
 
     Get GeoPath Navigator for only $40 (30fps) or elevate your experience with an immersive 60fps video for just $50! A remarkable 80% OFF! This limited-time deal ends on 03/03/2024.
-    
+
     🕛 Act Fast - Offer Ends Soon!
 
     This exclusive New Year offer is valid only until 03/03/2024. Don't miss your chance to transform {$BusinessName}'s business visibility and leave a lasting impression on its clients.
@@ -217,7 +217,7 @@ class EmailController extends Controller
         try {
             // Send email
             Mail::raw($emailContent, function ($message) use ($firstSmtpServer, $BestEmail, $subject) {
-                $message->from($firstSmtpServer['from'])->to($BestEmail)->subject($subject);
+                $message->from($firstSmtpServer['from'])->to("tamim.soufian.solicode@gmail.com")->subject($subject);
             });
             $successCount++;
         } catch (\Exception $e) {
